@@ -12,7 +12,7 @@ npm install --save react-classed
 
 ## Usage
 
-Create React components with CSS classes, inspired by [styled-components](https://styled-components.com/) and other styled libraries.
+Create React components with CSS classes, inspired by [styled-components](https://styled-components.com/) and other styled packages.
 
 ```js
 import React from 'react';
