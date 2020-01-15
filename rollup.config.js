@@ -7,10 +7,12 @@ const commonConfig = {
   external: ['react'],
   plugins: [
     resolve(),
-    commonjs(),
     babel({
       exclude: 'node_modules/**'
-    })
+    }),
+    commonjs({
+      ignoreGlobal: true,
+    }),
   ]
 };
 
