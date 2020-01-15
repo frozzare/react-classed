@@ -20,14 +20,14 @@ export default [
   {
     ...commonConfig,
     output: {
-      dir: 'lib/cjs/index.js',
+      dir: 'lib/cjs',
       format: 'cjs'
     },
   },
   {
     ...commonConfig,
     output: {
-      dir: 'lib/esm/index.js',
+      dir: 'lib/esm',
       format: 'esm'
     },
   },
