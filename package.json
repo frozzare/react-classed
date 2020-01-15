@@ -1,0 +1,47 @@
+{
+  "name": "react-classed",
+  "version": "1.0.0",
+  "description": "Create React components with CSS classes",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "scripts": {
+    "build": "rollup --config",
+    "lint": "semistandard src __tests__",
+    "prepare": "npm run build",
+    "test": "jest"
+  },
+  "keywords": [
+    "classNames",
+    "components",
+    "classed",
+    "css",
+    "react",
+    "styled"
+  ],
+  "author": "Fredrik Forsmo <fredrik.forsmo@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "react": "^16.12.0",
+    "react-test-renderer": "^16.12.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3"
+  },
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "^0.8.6",
+    "classnames": "^2.2.6",
+    "semistandard": "^14.2.0"
+  }
+}
