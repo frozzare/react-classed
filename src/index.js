@@ -92,7 +92,13 @@ const classed = tag => {
 
   const Hoc = (classNames, css) => {
     return props => {
-      props = Object.fromEntries(Object.entries(props).filter(([key]) => isPropValid(key)))
+      props = Object.keys(props)
+      .filter(key => isPropValid(key))
+      .reduce((obj, key) => {
+        obj[key] = props[key];
+        return obj;
+      }, {});
+
       props = {
         ...props,
         className: `${processClassNames(classNames, props)}`,
