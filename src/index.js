@@ -4,16 +4,6 @@ import classnames from 'classnames';
 import tags from './tags';
 
 /**
- * Flatten array.
- *
- * @param {array} arr
- *
- * @return {array}
- */
-const flattenArray = arr =>
-  arr.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);
-
-/**
  * Process css and return style object.
  *
  * @param {mixed} css
@@ -86,11 +76,12 @@ const processClassNames = (classNames, props = {}) => {
 
     return classnames(input);
   })
+  .flat()
   .join(' ')
   .replace(/\s+/g, ' ')
   .trim();
 
-  value = classnames(flattenArray(value), props.className);
+  value = classnames(value, props.className);
 
   // remove dublicated classnames.
   return Array.from(new Set(value.split(' '))).join(' ');
