@@ -1,7 +1,5 @@
 # react-classed
 
-> Work in progress
-
 Create React components with CSS classes. Perfect when using a CSS framework, e.g [Tailwind](https://tailwindcss.com/).
 
 ## Installation
