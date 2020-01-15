@@ -19,6 +19,12 @@ describe('Classed', () => {
     assertJSON(<Text/>, <p className=""/>);
   });
 
+  test('it works with display name', () => {
+    const Text = classed.p('');
+
+    expect(Text.displayName).toEqual('Classed(p)');
+  });
+
   test('it allows passing custom components', () => {
     const Button = props => <button {...props}>{props.children}</button>;
     const BlackButton = classed(Button)('bg-black');

@@ -101,8 +101,8 @@ const processClassNames = (classNames, props = {}) => {
 const classed = tag => {
   const name = typeof tag === 'string' ? tag : tag.displayName || tag.name;
 
-  const Hoc = (classNames, css) => {
-    return props => {
+  return (classNames, css) => {
+    const Hoc = props => {
       props = Object.keys(props)
       .filter(key => isPropValid(key))
       .reduce((obj, key) => {
@@ -122,11 +122,11 @@ const classed = tag => {
 
       return React.createElement(tag, props);
     };
+
+    Hoc.displayName = `Classed(${name})`;
+
+    return Hoc;
   };
-
-  Hoc.displayName = `Classed(${name})`;
-
-  return Hoc;
 };
 
 for (const tag of tags) {
