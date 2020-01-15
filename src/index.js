@@ -4,26 +4,28 @@ import classnames from 'classnames';
 import tags from './tags';
 
 /**
- * Get style object.
+ * Process css and return style object.
  *
  * @param {mixed} css
+ *
+ * @return {object}
  */
-const getStyle = css => {
+const processStyle = style => {
   // Support objects that has styles property.
-  if (typeof css == 'object' && typeof css.styles === 'string') {
-      css = css.styles;
+  if (typeof style == 'object' && typeof style.styles === 'string') {
+    style = style.styles;
   }
 
   // Support arrays.
-  if (Array.isArray(css)) {
-      css = css.join(';').replace(';;', ';');
+  if (Array.isArray(style)) {
+    style = style.join(';').replace(';;', ';');
   }
 
-  if (typeof css !== 'string') {
+  if (typeof style !== 'string') {
     return null;
   }
 
-  const rules = css
+  const rules = style
     .replace(/\/\*.+?\*\//g, '')
     .trim()
     .replace("\n", ';')
@@ -43,14 +45,14 @@ const getStyle = css => {
 }
 
 /**
- * Get the class names that should be used.
+ * Process classNames and returns classNames that should be used.
  *
  * @param {mixed} classNames
  * @param {object} props
  *
  * @return {string}
  */
-const getClassNames = (classNames, props = {}) => {
+const processClassNames = (classNames, props = {}) => {
   const arr = Array.isArray(classNames) ? classNames : [classNames];
 
   let value = arr.map(input => {
@@ -59,7 +61,7 @@ const getClassNames = (classNames, props = {}) => {
       const cs = [];
 
       if (Array.isArray(obj)) {
-        cs.push(getClassNames(obj, props));
+        cs.push(processClassNames(obj, props));
         return cs;
       }
 
@@ -93,10 +95,10 @@ const classed = tag => {
       props = Object.fromEntries(Object.entries(props).filter(([key]) => isPropValid(key)))
       props = {
         ...props,
-        className: `${getClassNames(classNames, props)}`,
+        className: `${processClassNames(classNames, props)}`,
       };
 
-      const style = getStyle(css);
+      const style = processStyle(css);
       if (style) {
         props.style = style;
       }
