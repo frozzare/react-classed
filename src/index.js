@@ -104,7 +104,7 @@ const classed = tag => {
   return (classNames, css) => {
     const Hoc = props => {
       props = Object.keys(props)
-      .filter(key => isPropValid(key))
+      .filter(isPropValid)
       .reduce((obj, key) => {
         obj[key] = props[key];
         return obj;
