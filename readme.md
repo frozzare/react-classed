@@ -1,5 +1,9 @@
 # react-classed
 
+[![Build Status](https://github.com/frozzare/react-classed/workflows/test/badge.svg)](https://github.com/personnummer/js/actions)
+![npm (scoped)](https://img.shields.io/npm/v/react-classed)
+
+
 Create React components with CSS classes. Perfect when using a CSS framework, e.g [Tailwind](https://tailwindcss.com/).
 
 ## Installation
