@@ -41,7 +41,7 @@ const processStyle = style => {
     .replace("\n", ';')
     .split(';');
 
-  return rules.reduce((acc, rule) => {
+  const obj = rules.reduce((acc, rule) => {
     let [key, value] = rule.split(':');
     if (key && value) {
       key = key.trim().split('-').map((item, index) => {
@@ -52,6 +52,12 @@ const processStyle = style => {
     }
     return acc
   }, {});
+
+  if (Object.keys(obj).length) {
+    return obj;
+  }
+
+  return null;
 }
 
 /**
@@ -98,11 +104,44 @@ const processClassNames = (classNames, props = {}) => {
   return Array.from(new Set(value.split(' '))).join(' ');
 }
 
+/**
+ * Process tagged template string.
+ *
+ * @param {object} props
+ */
+const processTemplate = props => {
+  return (strs, ...substs) => {
+    return substs.reduce(
+      (prev,cur,i) => {
+        cur = typeof cur === 'function' ? cur(props) : cur;
+        cur = processClassNames(cur, props);
+        return prev + cur + strs[i+1]
+      },
+      strs[0]
+    );
+  }
+}
+
+/**
+ * Create classed component.
+ *
+ * @param {object|string} tag
+ *
+ * @return {object}
+ */
 const classed = tag => {
   const name = typeof tag === 'string' ? tag : tag.displayName || tag.name;
 
-  return (classNames, css) => {
+  return (classNames, ...css) => {
     const Hoc = props => {
+      let localClassNames = '';
+
+      if (Array.isArray(classNames) && classNames.hasOwnProperty('raw')) {
+        localClassNames = processTemplate(props)(classNames, ...css);
+      } else {
+        localClassNames = processClassNames(classNames, props);
+      }
+
       props = Object.keys(props)
       .filter(isPropValid)
       .reduce((obj, key) => {
@@ -112,10 +151,10 @@ const classed = tag => {
 
       props = {
         ...props,
-        className: `${processClassNames(classNames, props)}`,
+        className: `${localClassNames}`,
       };
 
-      const style = processStyle(css);
+      const style = processStyle(css.pop());
       if (style) {
         props.style = style;
       }

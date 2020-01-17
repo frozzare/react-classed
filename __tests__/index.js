@@ -205,4 +205,33 @@ describe('Classed', () => {
       assertJSON(<Component />, test.actual)
     });
   });
+
+  test('it works with template tags', () => {
+    const hasError = true;
+    const ComponentA = classed.p`${hasError && 'error'}`;
+    assertJSON(<ComponentA hasError />, <p className="error" />);
+
+    const ComponentB = classed.p`${hasError && ['error', 'foo']}`;
+    assertJSON(<ComponentB hasError />, <p className="error foo" />);
+
+    const ComponentC = classed.p`${hasError && {'error': true, 'foo': false}}`;
+    assertJSON(<ComponentC hasError />, <p className="error" />);
+  });
+
+  test('it works with template tags with function', () => {
+    const ComponentA = classed.p`${({ hasError }) => hasError && 'error'}`;
+    assertJSON(<ComponentA hasError />, <p className="error" />);
+
+    const ComponentB = classed.p`${props => props.hasError && 'error'}`;
+    assertJSON(<ComponentB hasError />, <p className="error" />);
+
+    const ComponentC = classed.p`${props => props.hasError && ['error', 'foo']}`;
+    assertJSON(<ComponentC hasError />, <p className="error foo" />);
+
+    const ComponentD = classed.p`${props => ({'error': props.hasError})}`;
+    assertJSON(<ComponentD hasError />, <p className="error" />);
+
+    const ComponentE = classed.p`${() => 'error'}`;
+    assertJSON(<ComponentE hasError />, <p className="error" />);
+  });
 });
