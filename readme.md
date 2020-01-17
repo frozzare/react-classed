@@ -82,7 +82,7 @@ const Link = classed.a(({ href }) => ['link', { 'bg-red-500': href && href.start
 
 ### Array of classNames
 
-We can pass an array of classnames and allow any type of other input:
+You can pass an array of classnames and allow any type of other input:
 
 ```js
 const Link = classed.a([
@@ -93,13 +93,41 @@ const Link = classed.a([
 ]);
 ```
 
+### Template string
+
+You can also use tagged template strings:
+
+```js
+const Text = classed.p`text-blue-500`;
+```
+
+And with variables:
+
+```js
+const hasError = true;
+const Error = classed.p`${hasError && 'error'}`;
+```
+
+And with functions to access `props`
+
+```js
+const Link = classed.a`
+  text-green-500
+  ${({ href }) => ({
+    'bg-red-500': href && href.startsWith('http')
+  })}
+`
+```
+
+You can return array, objects with true/false values and strings.
+
 ### classnames package
 
-We also support all input types of [classnames](https://jedwatson.github.io/classnames/).
+You also support all input types of [classnames](https://jedwatson.github.io/classnames/).
 
 ### Additional CSS
 
-We also support additional css and [styled-components](https://styled-components.com/) and [emotion](https://emotion.sh/) `css` functions or any input that are a object with `styles` string property or array of strings.
+You can also add additional css and [styled-components](https://styled-components.com/) and [emotion](https://emotion.sh/) `css` functions or any input that are a object with `styles` string property or array of strings.
 
 ```js
 // template string
