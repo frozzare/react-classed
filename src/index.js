@@ -139,7 +139,7 @@ const classed = tag => {
       if (Array.isArray(classNames) && Object.prototype.hasOwnProperty.call(classNames, 'raw')) {
         localClassNames = processTemplate(props)(classNames, ...css);
       } else {
-        localClassNames = processClassNames(classNames, props);
+        localClassNames = classNames;
       }
 
       props = Object.keys(props)
@@ -151,10 +151,10 @@ const classed = tag => {
 
       props = {
         ...props,
-        className: `${localClassNames}`
+        className: `${processClassNames(localClassNames, props)}`
       };
 
-      const style = processStyle(css.pop());
+      const style = processStyle(css[0]);
       if (style) {
         props.style = style;
       }

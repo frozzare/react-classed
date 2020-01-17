@@ -241,5 +241,13 @@ describe('Classed', () => {
 
     const ComponentE = classed.p`${() => 'error'}`;
     assertJSON(<ComponentE hasError />, <p className='error' />);
+
+    const ComponentF = classed.a`
+      link
+      ${({ href }) => ({
+        'link-external': href && href.startsWith('http')
+      })}`
+    assertJSON(<ComponentF />, <a className='link' />);
+    assertJSON(<ComponentF href='http' />, <a href='http' className='link link-external' />);
   });
 });
