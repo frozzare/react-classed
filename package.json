@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rimraf lib && rollup -c",
-    "lint": "semistandard src __tests__",
+    "lint": "semistandard src/*.js",
     "prepare": "npm run build",
     "test": "jest"
   },

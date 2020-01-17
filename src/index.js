@@ -22,7 +22,7 @@ const flattenArray = arr =>
  */
 const processStyle = style => {
   // Support objects that has styles property.
-  if (typeof style == 'object' && typeof style.styles === 'string') {
+  if (typeof style === 'object' && typeof style.styles === 'string') {
     style = style.styles;
   }
 
@@ -38,19 +38,19 @@ const processStyle = style => {
   const rules = style
     .replace(/\/\*.+?\*\//g, '')
     .trim()
-    .replace("\n", ';')
+    .replace('\n', ';')
     .split(';');
 
   const obj = rules.reduce((acc, rule) => {
     let [key, value] = rule.split(':');
     if (key && value) {
       key = key.trim().split('-').map((item, index) => {
-        return index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item
-      }).join('')
+        return index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item;
+      }).join('');
 
       acc[key] = value.trim();
     }
-    return acc
+    return acc;
   }, {});
 
   if (Object.keys(obj).length) {
@@ -58,7 +58,7 @@ const processStyle = style => {
   }
 
   return null;
-}
+};
 
 /**
  * Process classNames and returns classNames that should be used.
@@ -81,7 +81,7 @@ const processClassNames = (classNames, props = {}) => {
         return cs;
       }
 
-      for (let key in obj) {
+      for (const key in obj) {
         if (obj[key]) {
           cs.push(key);
         }
@@ -102,7 +102,7 @@ const processClassNames = (classNames, props = {}) => {
 
   // remove dublicated classnames.
   return Array.from(new Set(value.split(' '))).join(' ');
-}
+};
 
 /**
  * Process tagged template string.
@@ -112,15 +112,15 @@ const processClassNames = (classNames, props = {}) => {
 const processTemplate = props => {
   return (strs, ...substs) => {
     return substs.reduce(
-      (prev,cur,i) => {
+      (prev, cur, i) => {
         cur = typeof cur === 'function' ? cur(props) : cur;
         cur = processClassNames(cur, props);
-        return prev + cur + strs[i+1]
+        return prev + cur + strs[i + 1];
       },
       strs[0]
     );
-  }
-}
+  };
+};
 
 /**
  * Create classed component.
@@ -136,22 +136,22 @@ const classed = tag => {
     const Hoc = props => {
       let localClassNames = '';
 
-      if (Array.isArray(classNames) && classNames.hasOwnProperty('raw')) {
+      if (Array.isArray(classNames) && Object.prototype.hasOwnProperty.call(classNames, 'raw')) {
         localClassNames = processTemplate(props)(classNames, ...css);
       } else {
         localClassNames = processClassNames(classNames, props);
       }
 
       props = Object.keys(props)
-      .filter(isPropValid)
-      .reduce((obj, key) => {
-        obj[key] = props[key];
-        return obj;
-      }, {});
+        .filter(isPropValid)
+        .reduce((obj, key) => {
+          obj[key] = props[key];
+          return obj;
+        }, {});
 
       props = {
         ...props,
-        className: `${localClassNames}`,
+        className: `${localClassNames}`
       };
 
       const style = processStyle(css.pop());
@@ -169,7 +169,7 @@ const classed = tag => {
 };
 
 for (const tag of tags) {
-    classed[tag] = classed(tag);
+  classed[tag] = classed(tag);
 }
 
 export default classed;
