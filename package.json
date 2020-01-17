@@ -1,6 +1,6 @@
 {
   "name": "react-classed",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Create React components with CSS classes",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
