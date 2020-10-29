@@ -10,7 +10,7 @@ import tags from './tags';
  *
  * @return {array}
  */
-const flattenArray = arr =>
+const flattenArray = (arr) =>
   arr.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);
 
 /**
@@ -20,7 +20,7 @@ const flattenArray = arr =>
  *
  * @return {object}
  */
-const processStyle = style => {
+const processStyle = (style) => {
   // Support objects that has styles property.
   if (typeof style === 'object' && typeof style.styles === 'string') {
     style = style.styles;
@@ -44,9 +44,15 @@ const processStyle = style => {
   const obj = rules.reduce((acc, rule) => {
     let [key, value] = rule.split(':');
     if (key && value) {
-      key = key.trim().split('-').map((item, index) => {
-        return index ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase() : item;
-      }).join('');
+      key = key
+        .trim()
+        .split('-')
+        .map((item, index) => {
+          return index
+            ? item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
+            : item;
+        })
+        .join('');
 
       acc[key] = value.trim();
     }
@@ -71,7 +77,7 @@ const processStyle = style => {
 const processClassNames = (classNames, props = {}) => {
   const arr = Array.isArray(classNames) ? classNames : [classNames];
 
-  let value = arr.map(input => {
+  let value = arr.map((input) => {
     if (typeof input === 'function') {
       const obj = input(props);
       const cs = [];
@@ -93,10 +99,7 @@ const processClassNames = (classNames, props = {}) => {
     return classnames(input);
   });
 
-  value = flattenArray(value)
-    .join(' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+  value = flattenArray(value).join(' ').replace(/\s+/g, ' ').trim();
 
   value = classnames(value, props.className);
 
@@ -109,16 +112,13 @@ const processClassNames = (classNames, props = {}) => {
  *
  * @param {object} props
  */
-const processTemplate = props => {
+const processTemplate = (props) => {
   return (strs, ...substs) => {
-    return substs.reduce(
-      (prev, cur, i) => {
-        cur = typeof cur === 'function' ? cur(props) : cur;
-        cur = processClassNames(cur, props);
-        return prev + cur + strs[i + 1];
-      },
-      strs[0]
-    );
+    return substs.reduce((prev, cur, i) => {
+      cur = typeof cur === 'function' ? cur(props) : cur;
+      cur = processClassNames(cur, props);
+      return prev + cur + strs[i + 1];
+    }, strs[0]);
   };
 };
 
@@ -129,14 +129,17 @@ const processTemplate = props => {
  *
  * @return {object}
  */
-const classed = tag => {
+const classed = (tag) => {
   const name = typeof tag === 'string' ? tag : tag.displayName || tag.name;
 
   return (classNames, ...css) => {
-    const Hoc = props => {
+    const Hoc = (props) => {
       let localClassNames = '';
 
-      if (Array.isArray(classNames) && Object.prototype.hasOwnProperty.call(classNames, 'raw')) {
+      if (
+        Array.isArray(classNames) &&
+        Object.prototype.hasOwnProperty.call(classNames, 'raw')
+      ) {
         localClassNames = processTemplate(props)(classNames, ...css);
       } else {
         localClassNames = classNames;
@@ -151,7 +154,7 @@ const classed = tag => {
 
       props = {
         ...props,
-        className: `${processClassNames(localClassNames, props)}`
+        className: `${processClassNames(localClassNames, props)}`,
       };
 
       const style = processStyle(css[0]);

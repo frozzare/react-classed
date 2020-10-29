@@ -134,5 +134,5 @@ export default [
   'stop',
   'svg',
   'text',
-  'tspan'
+  'tspan',
 ];

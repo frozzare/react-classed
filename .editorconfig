@@ -10,3 +10,6 @@ trim_trailing_whitespace = true
 
 [*.md]
 trim_trailing_whitespace = false
+
+[*.{js,jsx,ts,tsx,vue}]
+quote_type = single

@@ -8,12 +8,12 @@ const commonConfig = {
   plugins: [
     resolve(),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
     }),
     commonjs({
       ignoreGlobal: true,
     }),
-  ]
+  ],
 };
 
 export default [
@@ -21,14 +21,15 @@ export default [
     ...commonConfig,
     output: {
       dir: 'lib/cjs',
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'default',
     },
   },
   {
     ...commonConfig,
     output: {
       dir: 'lib/esm',
-      format: 'esm'
+      format: 'esm',
     },
   },
 ];
