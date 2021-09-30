@@ -25,24 +25,24 @@
   "author": "Fredrik Forsmo <fredrik.forsmo@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-react": "^7.9.4",
-    "@rollup/plugin-commonjs": "^16.0.0",
-    "@rollup/plugin-node-resolve": "^10.0.0",
-    "babel-jest": "^26.6.1",
-    "jest": "^26.6.1",
+    "@babel/preset-env": "^7.15.6",
+    "@babel/preset-react": "^7.14.5",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "babel-jest": "^27.2.4",
+    "jest": "^27.2.4",
     "react": "^17.0.1",
-    "react-test-renderer": "^17.0.1",
+    "react-test-renderer": "^17.0.2",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1",
+    "rollup": "^2.57.0",
     "rollup-plugin-babel": "^4.4.0",
-    "semistandard": "^15.0.0"
+    "semistandard": "^16.0.1"
   },
   "peerDependencies": {
     "react": "*"
   },
   "dependencies": {
-    "@emotion/is-prop-valid": "^0.8.8",
-    "classnames": "^2.2.6"
+    "@emotion/is-prop-valid": "^1.1.0",
+    "classnames": "^2.3.1"
   }
 }
