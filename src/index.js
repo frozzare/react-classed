@@ -38,7 +38,7 @@ const processStyle = (style) => {
   const rules = style
     .replace(/\/\*.+?\*\//g, '')
     .trim()
-    .replace('\n', ';')
+    .replace(/\r?\n/g, ';')
     .split(';');
 
   const obj = rules.reduce((acc, rule) => {
